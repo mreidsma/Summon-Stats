@@ -21,6 +21,10 @@ if ($results) {
 	$pageNo = array();
 	$linkType = array();
 	$linkSource = array();
+<<<<<<< HEAD
+=======
+	$linkOpac = array();
+>>>>>>> master
 	
 	foreach ($results as $key => $value) {
 		
@@ -67,7 +71,19 @@ if ($results) {
 	}	
 	ksort($linkPos);
 	ksort($pageNo);
+<<<<<<< HEAD
 	ksort($linkSource);
+=======
+	
+	foreach($linkSource as $key => $value) {
+		$OpacTotal = $OpacTotal + 1;
+		if(($key == "Book") || ($key == "eBook")) {
+			$OpacSource["OPAC"] += 1;
+		} else {
+			$OpacSource["Non-OPAC"] += 1;
+		}
+	}
+>>>>>>> master
 	
 }
 
@@ -92,6 +108,13 @@ if ($results) {
       google.setOnLoadCallback(clickChart);
 	// Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(sourceChart);
+<<<<<<< HEAD
+=======
+	// Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(sourcePerChart);
+	// Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(sourceOpacChart);
+>>>>>>> master
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
@@ -155,6 +178,69 @@ if ($results) {
         var chart = new google.visualization.BarChart(document.getElementById('source_div'));
         chart.draw(data, options);
       }
+<<<<<<< HEAD
+=======
+
+	function sourcePerChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source Type');
+        data.addColumn('number', 'Clicks');
+        data.addRows([
+
+	<?php
+
+		foreach ($linkSource as $key => $value) {
+
+			echo "['" . $key . "', " . $value . "],";
+
+		}
+
+	?>
+
+        ]);
+
+        // Set chart options
+        var options = {'title':'Clicks on Summon Results by Item Type',
+                       'width':300,
+                       'height':240};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('source_perc_div'));
+        chart.draw(data, options);
+      }
+
+	function sourceOpacChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source Type');
+        data.addColumn('number', 'Clicks');
+        data.addRows([
+
+	<?php
+
+		foreach ($OpacSource as $key => $value) {
+
+			echo "['" . $key . "', " . $value . "],";
+
+		}
+
+	?>
+
+        ]);
+
+        // Set chart options
+        var options = {'title':'Clicks on Summon Results by Holdings',
+                       'width':300,
+                       'height':240};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('source_opac_div'));
+        chart.draw(data, options);
+      }
+>>>>>>> master
 	function pageChart() {
 
         // Create the data table.
@@ -245,6 +331,14 @@ if ($results) {
     </script>
 
 	<link rel="stylesheet" type="text/css" href="http://gvsu.edu/cms3/assets/741ECAAE-BD54-A816-71DAF591D1D7955C/libui.css" />
+<<<<<<< HEAD
+=======
+	<style>
+	body { font-family: Helvetica, "HelveticaNeue", Verdana, Arial, sans-serif;}
+	h6 { font-size: .55em; color: #000;}
+	.big_number { font-size: 6em; color: #069;}
+		</style>
+>>>>>>> master
 	
   </head>
 
@@ -271,6 +365,37 @@ if ($results) {
 			<div id="source_div"></div>
 		</div>
 	</div>
+<<<<<<< HEAD
+=======
+	
+	<div class="line">
+		<div class="size1of3 unit">
+			<div id="source_perc_div"></div>
+		</div>
+		
+		<div class="size1of3 unit">
+			<!--div id="source_opac_div"></div-->
+			<div id="summon_opac_usage">
+				<h6><strong>Clicked items that are in the OPAC</h6>
+				
+<?php
+	// Calculate the percentage of OPAC records clicked on - mapping Books and eBooks
+
+	$TotalOpacRecords = number_format((($OpacSource["OPAC"]/$OpacTotal)*100), 1);
+	
+	echo '<div class="big_number">' . $TotalOpacRecords . '%</div>';
+	
+?>
+				
+				
+			</div>
+		</div>
+		
+		<div class="size1of3 unit lastUnit">
+			<div id=""></div>
+		</div>
+	</div>
+>>>>>>> master
 		
  </body>
 </html>
