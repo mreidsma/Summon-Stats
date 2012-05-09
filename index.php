@@ -70,11 +70,11 @@ if ($results) {
 	ksort($pageNo);
 	
 	foreach($linkSource as $key => $value) {
-		$OpacTotal = $OpacTotal + 1;
+		$OpacTotal = $OpacTotal + $value;
 		if(($key == "Book") || ($key == "eBook")) {
-			$OpacSource["OPAC"] += 1;
+			$OpacSource["OPAC"] += $value;
 		} else {
-			$OpacSource["Non-OPAC"] += 1;
+			$OpacSource["Non-OPAC"] += $value;
 		}
 	}
 	
@@ -162,7 +162,7 @@ if ($results) {
         // Set chart options
         var options = {'title':'Clicks on Summon Results by Item Type',
                        'width':960,
-                       'height':250};
+                       'height':450};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('source_div'));
