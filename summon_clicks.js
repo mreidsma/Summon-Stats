@@ -1,5 +1,5 @@
 
-$("#topbar").find(".link").prepend('<a href="http://gvsu.edu/ask">Ask a Librarian</a>');
+$("#topbar").find(".link").prepend('<a href="PATH/TO/LINK">Ask a Librarian</a>');
 
 $(document).ready(function() {
 	
@@ -48,7 +48,7 @@ $("a.gvsuTest").click(function() {
 	$.ajax({
 		dataType: "string",
 		type: "POST",
-		url: "http://gvsulib.com/temp/click_write.php",
+		url: "PATH/TO/click_write.php",
 		data: datastring
 	});
 	datastring = "";
