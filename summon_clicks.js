@@ -14,7 +14,6 @@ var clickType = "";
 var datastring = "";
 var page = $("#pageNavigation").find("li:not(:has(a))").text();
 var searchKey = "s.q";
-var searchQuery = window.location.search;
 
 $("a.documentLink").each(function(){
 	var contentType = $(this).parent().parent().parent().parent().parent().attr("Type");
@@ -43,7 +42,7 @@ $(".previewDocumentTitle").find("a").each(function(){
 $("a.gvsuTest").click(function() {
 	clicked = $(this).attr("id");
 	ts = Math.round((new Date()).getTime() / 1000);
-	datastring = datastring + ts + "," + clicked + "," + page + "," + searchQuery;
+	datastring = datastring + ts + "," + clicked + "," + page;
 	datastring = "data=" + datastring;
 	$.ajax({
 		dataType: "string",
