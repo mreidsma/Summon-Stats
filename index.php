@@ -9,7 +9,7 @@ function cmp($a, $b) {
 	return ($a[0] > $b[0]) ? -1 : 1;
 }
 
-if (!$DataFile = fopen("http://gvsulib.com/temp/summon_clicks.csv", "r")) {echo "Failure: cannot open file"; die;};
+if (!$DataFile = fopen("PATH/TO/summon_clicks.csv", "r")) {echo "Failure: cannot open file"; die;};
 while ($data = fgetcsv($DataFile, 1000, ",")) {
 		$row++;
 		$results[] = array($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
@@ -21,10 +21,7 @@ if ($results) {
 	$pageNo = array();
 	$linkType = array();
 	$linkSource = array();
-<<<<<<< HEAD
-=======
 	$linkOpac = array();
->>>>>>> master
 	
 	foreach ($results as $key => $value) {
 		
@@ -71,9 +68,7 @@ if ($results) {
 	}	
 	ksort($linkPos);
 	ksort($pageNo);
-<<<<<<< HEAD
 	ksort($linkSource);
-=======
 	
 	foreach($linkSource as $key => $value) {
 		$OpacTotal = $OpacTotal + $value;
@@ -83,7 +78,6 @@ if ($results) {
 			$OpacSource["Non-OPAC"] += $value;
 		}
 	}
->>>>>>> master
 	
 }
 
@@ -108,13 +102,10 @@ if ($results) {
       google.setOnLoadCallback(clickChart);
 	// Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(sourceChart);
-<<<<<<< HEAD
-=======
 	// Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(sourcePerChart);
 	// Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(sourceOpacChart);
->>>>>>> master
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
@@ -178,8 +169,6 @@ if ($results) {
         var chart = new google.visualization.BarChart(document.getElementById('source_div'));
         chart.draw(data, options);
       }
-<<<<<<< HEAD
-=======
 
 	function sourcePerChart() {
 
@@ -240,7 +229,6 @@ if ($results) {
         var chart = new google.visualization.PieChart(document.getElementById('source_opac_div'));
         chart.draw(data, options);
       }
->>>>>>> master
 	function pageChart() {
 
         // Create the data table.
@@ -330,15 +318,11 @@ if ($results) {
       }
     </script>
 
-	<link rel="stylesheet" type="text/css" href="http://gvsu.edu/cms3/assets/741ECAAE-BD54-A816-71DAF591D1D7955C/libui.css" />
-<<<<<<< HEAD
-=======
 	<style>
 	body { font-family: Helvetica, "HelveticaNeue", Verdana, Arial, sans-serif;}
 	h6 { font-size: .55em; color: #000;}
 	.big_number { font-size: 6em; color: #069;}
 		</style>
->>>>>>> master
 	
   </head>
 
@@ -365,8 +349,6 @@ if ($results) {
 			<div id="source_div"></div>
 		</div>
 	</div>
-<<<<<<< HEAD
-=======
 	
 	<div class="line">
 		<div class="size1of3 unit">
@@ -395,7 +377,6 @@ if ($results) {
 			<div id=""></div>
 		</div>
 	</div>
->>>>>>> master
 		
  </body>
 </html>
