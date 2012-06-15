@@ -12,8 +12,14 @@ var ts = 0;
 var clicked = "";
 var clickType = "";
 var datastring = "";
-var page = $("#pageNavigation").find("li:not(:has(a))").text();
-var searchKey = "s.q";
+
+// Page navigation fix for pages without navigation by Michael Oehrlich of Thüringer Universitäts- und Landesbibliothek Jena
+
+if($("#pageNavigation").length){
+              page = $("#pageNavigation").find("li:not(:has(a))").text();
+       }else{
+              page = '1';
+       }
 
 $("a.documentLink").each(function(){
 	var contentType = $(this).parent().parent().parent().parent().parent().attr("Type");
@@ -21,12 +27,14 @@ $("a.documentLink").each(function(){
 	$(this).attr("id","docLink," + i + "," + contentType).addClass("gvsuTest");
 	i=i+1;
 });
-$("div.summary").find("a").each(function(){
-	var contentType = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr("Type");
-	contentType = encodeURI(contentType);
-	$(this).attr("id","summaryLink," + j + "," + contentType).addClass("gvsuTest");
-	j=j+1;
+
+// Following code by @benelwell to fix duplicate link bug with summary links
+
+$('div.document').each(function(){
+        $(this).attr("pos",j);
+        j=j+1;
 });
+
 $(".thumbnail").find("a").each(function(){
 	var contentType = $(this).parent().parent().parent().parent().parent().parent().parent().attr("Type");
 	contentType = encodeURI(contentType);
@@ -45,12 +53,32 @@ $("a.gvsuTest").click(function() {
 	datastring = datastring + ts + "," + clicked + "," + page;
 	datastring = "data=" + datastring;
 	$.ajax({
-		dataType: "string",
-		type: "POST",
+		dataType: "jsonp",
 		url: "PATH/TO/click_write.php",
 		data: datastring
 	});
 	datastring = "";
 	clicked = "";
 });
+
+// Following code via @benelwell
+// Add this bit of code to bind the click action to all the summary links, including late books:
+// It also solves the problem with multiple links per item getting different numbers (e.g. if we have book and ebook) and it gets the right content type for each separate link.
+$('div.document').delegate('.summary a', 'click', function() {
+            var clickedPos = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr("pos");
+            var contentType = $(this).parent().parent().parent().find("div.content-type").find("div.text:first").text();
+            contentType = encodeURI(contentType);
+            clicked = "summaryLink," + clickedPos + "," + contentType;
+            ts = Math.round((new Date()).getTime() / 1000);
+            datastring = datastring + ts + "," + clicked + "," + page;
+            datastring = "data=" + datastring;
+            $.ajax({
+                dataType: "jsonp",
+                url: "PATH/TO/click_write.php",
+                data: datastring
+            });
+            datastring = "";
+            clicked = "";
+});
+
 });
