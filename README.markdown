@@ -2,7 +2,7 @@
 
 ---
 
-This tool was developed by Matthew Reidsma in HTML, PHP, and Javascript to learn hw users of Grand Valley State University's Summon Discovery Service use the results they get from searches. We hope you find it useful.
+This tool was developed by Matthew Reidsma in HTML, PHP, and Javascript to learn how users of Grand Valley State University's Summon Discovery Service use the results they get from searches. We hope you find it useful.
 
 Serials Solutions Summon doesn't give you stats on how users click on results, which is more useful than what they search for. This script adds that feature.
 
@@ -11,27 +11,21 @@ Serials Solutions Summon doesn't give you stats on how users click on results, w
 Summon Stats has four files:
 
 summon\_clicks.js: the javascript called by Summon.
-click\_write.js: The PHP script that writes the data to the spreadsheet.
-summon\_clicks.csv: the spreadsheet file where the data will be saved. This is easier to install than a database.
+write.js: The PHP script that writes the data to the spreadsheet.
+clicks.csv: the spreadsheet file where the data will be saved. This is easier to install than a database.
 index.php: the page for viewing your summon statistics.
 
 ### Customizing the files
 
-Open index.php in your favorite text editor and change the path in line twelve to where you will put the summon\_clicks.csv file. For instance, if you'll upload the file to http://mywebsite.com/files/summon_clicks.csv, you'll change line 12 to:
+Upload the index.php, write.php, and clicks.csv to the same folder on your website.
 
-	if (!$DataFile = fopen("http://mywebsite.com/files/summon_clicks.csv", "r")) {echo "Failure: cannot open file"; die;};
+Open summon_clicks.js in your text editor. On line 6, you need to add the path to the write.php file. If you will put the file at http://mywebsite.com/files/, then you'd want line 51 to look like this:
 
-Upload the index.php to your website where you want to view the statistics.
-
-Now open summon_clicks.js in your text editor. On line 2, you'll need to customize the link that Summon will show in the top bar. The text is currently set to "Ask a Librarian", so you can just change the link to point to your ask a librarian page.
-
-Now, on line 51, you need to add the path to the click\_write.php file. If you will put the file at http://mywebsite.com/files/, then you'd want line 51 to look like this:
-
-	url: "http://mywebsite.com/files/click_write.php",
+	var path = "http://mywebsite.com/files/";
 	
-Make sure that trailing comma is still there!
+Make sure that trailing slash is still there!
 
-Now, upload all the files to the server where you said they would be. All that is left is to get the script in Summon.
+Now upload summon_clicks.js to your server. All that is left is to get the script in Summon.
 
 ### Adding the script to Summon
 

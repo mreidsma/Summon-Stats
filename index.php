@@ -9,8 +9,8 @@ function cmp($a, $b) {
 	return ($a[0] > $b[0]) ? -1 : 1;
 }
 
-if (!$DataFile = fopen("PATH/TO/summon_clicks.csv", "r")) {echo "Failure: cannot open file"; die;};
-while ($data = fgetcsv($DataFile, 1000, ",")) {
+if (!$DataFile = fopen("clicks.csv", "r")) {echo "Failure: cannot open file"; die;};
+while ($data = fgetcsv($DataFile, 5000, ",")) {
 		$row++;
 		$results[] = array($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
 	}
@@ -27,8 +27,8 @@ if ($results) {
 		
 		// Build chart for link location
 		
-		$linkPosition = $value[2];
-				
+		$linkPosition = $value[1];
+						
 		$link = $linkPosition;
 		if($link != "") {
 			if(isset($linkPos[$link]))
@@ -39,7 +39,7 @@ if ($results) {
 		
 		// Build chart for page no
 		
-		$pageClicked = $value[4];
+		$pageClicked = $value[3];
 		if($pageClicked != "") {
 			if(isset($pageNo[$pageClicked]))
 		        $pageNo[$pageClicked] += 1;
@@ -49,7 +49,7 @@ if ($results) {
 		
 		// Build chart for which link
 		
-		$whichLink = $value[1];
+		$whichLink = $value[2];
 		if($whichLink != "") {
 			if(isset($linkType[$whichLink]))
 		        $linkType[$whichLink] += 1;
@@ -57,7 +57,7 @@ if ($results) {
 		        $linkType[$whichLink] = 1;
 		}
 		
-		$linkSrc = $value[3];
+		$linkSrc = $value[4];
 		if($linkSrc != "") {
 			if(isset($linkSource[$linkSrc]))
 		        $linkSource[$linkSrc] += 1;
@@ -68,11 +68,10 @@ if ($results) {
 	}	
 	ksort($linkPos);
 	ksort($pageNo);
-	ksort($linkSource);
 	
 	foreach($linkSource as $key => $value) {
 		$OpacTotal = $OpacTotal + $value;
-		if(($key == "Book") || ($key == "eBook")) {
+		if(($key == "Book") || ($key == "eBook") || ($key == "Video Recording") || ($key == "Journal")) {
 			$OpacSource["OPAC"] += $value;
 		} else {
 			$OpacSource["Non-OPAC"] += $value;
@@ -133,7 +132,7 @@ if ($results) {
         // Set chart options
         var options = {'title':'Clicks on Summon Results by Position',
                        'width':960,
-                       'height':600};
+                       'height':1000};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -163,7 +162,7 @@ if ($results) {
         // Set chart options
         var options = {'title':'Clicks on Summon Results by Item Type',
                        'width':960,
-                       'height':450};
+                       'height':600};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('source_div'));
@@ -322,6 +321,26 @@ if ($results) {
 	body { font-family: Helvetica, "HelveticaNeue", Verdana, Arial, sans-serif;}
 	h6 { font-size: .55em; color: #000;}
 	.big_number { font-size: 6em; color: #069;}
+	/* Grid styles : Based on Nicole Sullivan's OOCSS grids */
+
+	.line{overflow:hidden;*overflow:visible;*zoom:1;clear:both;}	
+	.size1of1{float:none;width:100%;}
+	.size1of2,.size1of4,.size3of4 {width:100%;}
+	.size1of3,.size2of3{width:100%;}
+	.unit{padding:.5em 1% .5em 0;}
+
+	@media screen and (min-width:550px) {
+	.unit{float:left;}
+	.size1of4,.size1of4{width:49%;}	
+	.size1of3{width:32%;}
+	.size2of3{width:65%;}
+	}
+
+	@media screen and (min-width:900px) {
+	.size1of2{width:49%;}
+	.size1of4{width:24%;}
+	.size3of4{width:74%;}
+	}
 		</style>
 	
   </head>
@@ -377,6 +396,10 @@ if ($results) {
 			<div id=""></div>
 		</div>
 	</div>
+	
+	<div class="line">
+		<div class="size1of1 unit">
+			<p style="text-align:center;color:#777;"><small>This tool written by <a href="http://matthewreidsma.com">Matthew Reidsma</a> :: &copy; 2012 <abbr title="Grand Valley State University">GVSU</abbr> Libraries. Source code <a href="https://github.com/mreidsma/Summon-Stats">available on Github</a>.</small></p>
 		
  </body>
 </html>
