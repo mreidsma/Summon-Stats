@@ -20,9 +20,9 @@ $(document).ready(function() {
 	// Page navigation fix for pages without navigation by Michael Oehrlich of Thüringer Universitäts- und Landesbibliothek Jena
 
 	if($("#pageNavigation").length){
-	     page = $("#pageNavigation").find("li:not(:has(a))").text();
+	     var page = $("#pageNavigation").find("li:not(:has(a))").text();
 	} else {
-	     page = '1';
+	     var page = '1';
 	}
 	
 	$("a.documentLink").each(function(){
