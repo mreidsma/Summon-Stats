@@ -16,6 +16,7 @@ $(document).ready(function() {
 	var contentType = "";
 	var ts = 0; // Timestamp
 	var searchClicks = 1; // # of clicks/search
+	var availabilityText = "";
 
 	// Page navigation fix for pages without navigation by Michael Oehrlich of Thüringer Universitäts- und Landesbibliothek Jena
 
@@ -30,8 +31,11 @@ $(document).ready(function() {
 		i=i+1;
 	});
 	
-	$("div.summary").find("a").each(function(){
-		$(this).attr("data-click", j + "/summaryLink/" + page + "/").addClass("gvsuTest");
+	// This fix thanks to Ben Elwell!
+	
+	$("div.document").each(function(){
+
+		$(this).attr("data-click", j + "/summaryLink/" + page + "/");
 		j=j+1;
 	});
 	
@@ -50,6 +54,26 @@ $(document).ready(function() {
 $("a.gvsuTest").click(function() {
 	
 	clicked = $(this).attr("data-click");
+	
+	// Thanks for Matt Matchell (@shuckle) for the tip on .closest()
+	contentType = escape($(this).closest('div.document').attr("type"));
+	
+	ts = Math.round((new Date()).getTime() / 1000); // Timestamp
+	
+	var url =  path + ts + "/" + clicked + contentType + "/" + searchClicks;
+	
+	$("body").append('<iframe src="' + url + '" height="0" width="0" style="visibility:hidden;"></iframe>');
+	
+	// Add one to number of clicks for this search
+	searchClicks = searchClicks + 1;
+
+});
+
+// This fix thanks to Ben Elwell! Delegate the clickability of the summary link, since it often doesn't exist yet when this script runs.
+
+$("div.document").on('click', '.summary a', function() {
+	
+	clicked = $(this).closest("div.document").attr("data-click");
 	
 	// Thanks for Matt Matchell (@shuckle) for the tip on .closest()
 	contentType = escape($(this).closest('div.document').attr("type"));
